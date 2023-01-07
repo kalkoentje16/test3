@@ -1,23 +1,32 @@
-<script>
-var headers = ["h1", "h2", "h3", "h4"]
-var colors = ["red", "orange", "green", "blue"]
+import React from 'react';
+import { StyleSheet, View, Text } from 'react-native';
+import type { SectionHeaderProps } from './types';
 
-$.each(headers, function(i, header){
-    var color = colors[i];
-    $(header).each(function () {
-        var href=$(this).attr("id");
-        $(this).append('<a class="headerlink" style="color:' + color + '" href="#' + href + '" title="Permanent link">¶</a>')
-    });
-})
+class SectionHeader extends React.PureComponent<SectionHeaderProps> {
+  render() {
+    const { title } = this.props;
+    return (
+      <View style={styles.sectionWrapper}>
+        <Text style={styles.sectionTitle}>{title}</Text>
+        <View style={styles.sectionDivider} />
+      </View>
+    );
+  }
+}
 
-// Ensure that sidebar on left has arrows
-$(".pancakes-parent").on('click', function(){ 
-    console.log($(this).next());
-    $(this).next().find('.pancakes-child').toggle();
-    if ($(this).hasClass('open-parent')){
-        $(this).removeClass('open-parent');
-    } else {
-        $(this).addClass('open-parent');
-    }
-})
-</script>
+const styles = StyleSheet.create({
+  sectionWrapper: { flexDirection: 'row', alignItems: 'center' },
+  sectionTitle: {
+    paddingHorizontal: 5,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'grey',
+  },
+  sectionDivider: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: 'gray',
+  },
+});
+
+export default SectionHeader;
